@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import NavbarAdmin from '../NavbarAdmin';
 
 function Register2() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const role = localStorage.getItem("user_role");
+    const token = localStorage.getItem("token");
+  
+    if (role !== "admin") {
+      navigate("/login");
+    }
+  }, [navigate]);
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
@@ -11,7 +23,6 @@ function Register2() {
   const [adress, setAdress] = useState("");
   const [password, setPassword] = useState("");
   const [c_password, setC_password] = useState("");
-  const navigate = useNavigate();
 
 
   const handleSubmit = async (e) => {
@@ -53,7 +64,10 @@ function Register2() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <>
+      <NavbarAdmin />
+
+      <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
           Register
@@ -237,6 +251,8 @@ function Register2() {
         </div>
       </div>
     </div>
+    </>
+  
   );
 }
 

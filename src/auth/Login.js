@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import NavbarHome from '../NavbarHome';
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -52,7 +53,10 @@ function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <>
+      <NavbarHome />
+
+       <div className="flex justify-center items-center h-screen">
       <div className="xl:w-[700px] px-10 h-[400px] rounded-3xl xl:shadow-xl">
         <h1 className="text-center text-3xl font-bold mt-2 mb-2">Login</h1>
         {error && <p className="text-red-500">{error}</p>}
@@ -88,6 +92,8 @@ function Login() {
         </div>
       </div>
     </div>
+    </>
+ 
   );
 }
 
