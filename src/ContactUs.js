@@ -1,5 +1,6 @@
 import React from 'react';
 import NavbarHome from './NavbarHome';
+import Footer from './Footer';
 
 const ContactUs = () => {
   return (
@@ -71,6 +72,8 @@ const ContactUs = () => {
         </form>
       </div>
     </div>
+    <Footer />
+
  </>
   );
 };

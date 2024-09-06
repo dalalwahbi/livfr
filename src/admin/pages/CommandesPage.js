@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import NavbarAdmin from '../../NavbarAdmin';
 import './App.css';
+
 const CommandesPage = () => {
   const [commands, setCommands] = useState([]);
   const [livreurs, setLivreurs] = useState([]);
   const [selectedLivreur, setSelectedLivreur] = useState({});
+  const [currentPage, setCurrentPage] = useState(1); // New state for current page
+  const commandsPerPage = 10; // Number of commands to display per page
 
   useEffect(() => {
     const token = localStorage.getItem('token'); // Assuming you're storing the token in localStorage
@@ -16,7 +19,13 @@ const CommandesPage = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(response => setCommands(response.data))
+      .then(response => {
+        // Filter commands to exclude "livré" status and only include those where delivery_person_id is null
+        const filteredCommands = response.data.filter(command => 
+          command.status !== 'livré' && command.delivery_person_id === null
+        );
+        setCommands(filteredCommands);
+      })
       .catch(error => console.error('Error fetching commands:', error));
 
     // Fetch livreurs with headers
@@ -28,9 +37,6 @@ const CommandesPage = () => {
       .then(response => setLivreurs(response.data))
       .catch(error => console.error('Error fetching livreurs:', error));
   }, []);
-
-  console.log("commands", commands);
-  console.log("livreurs", livreurs);
 
   // Assign livreur
   const handleAssignLivreur = async (commandeId) => {
@@ -76,6 +82,16 @@ const CommandesPage = () => {
     setSelectedLivreur({ ...selectedLivreur, [commandId]: event.target.value });
   };
 
+  // Pagination logic
+  const indexOfLastCommand = currentPage * commandsPerPage;
+  const indexOfFirstCommand = indexOfLastCommand - commandsPerPage;
+  const currentCommands = commands.slice(indexOfFirstCommand, indexOfLastCommand);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const totalPages = Math.ceil(commands.length / commandsPerPage);
+
   return (
     <>
       <NavbarAdmin />
@@ -91,7 +107,7 @@ const CommandesPage = () => {
             </tr>
           </thead>
           <tbody>
-            {commands.map(command => (
+            {currentCommands.map(command => (
               <tr key={command.id}>
                 <td>{command.id}</td>
                 <td>{command.colis.livrer_a}</td>
@@ -119,13 +135,25 @@ const CommandesPage = () => {
                  >
                    Assign
                  </button>
-                 
                   )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
+        {/* Pagination controls */}
+        <div className="pagination">
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map(number => (
+            <button
+              key={number}
+              onClick={() => paginate(number)}
+              className={`mx-1 px-3 py-1 rounded ${number === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300'}`}
+            >
+              {number}
+            </button>
+          ))}
+        </div>
       </div>
     </>
   );

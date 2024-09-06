@@ -1,9 +1,9 @@
 .navbar {
-    height: 80px; /* Set a fixed height for the navbar */
+    height: 50px; /* Set a fixed height for the navbar */
     overflow: hidden; /* Hide any overflow */
   }
   
   .navbar img {
-    height: 100%; /* The logo will fill the height of the navbar */
+    height: 50%; /* The logo will fill the height of the navbar */
     width: auto; /* The width will adjust to maintain the aspect ratio */
   }

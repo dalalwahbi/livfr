@@ -9,11 +9,15 @@ const NavbarClient = () => {
     livrer_a: '',
     phone: '',
     adress: '',
-    address2: '',
+    de: '',
     ville: '',
     CRBT: '',
     valeur: ''
   });
+  
+
+  
+  
   const [userName, setUserName] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
@@ -56,6 +60,7 @@ const NavbarClient = () => {
       [id]: value,
     }));
   };
+  console.log("form data",formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,7 +118,20 @@ const NavbarClient = () => {
   };
 
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-
+  const cities = [
+    "Casablanca", "Fès", "Marrakech", "Tangier", "Sale", "Rabat", "Meknès", "Oujda-Angad", "Kenitra", "Agadir",
+    "Tétouan", "Taourirt", "Temara", "Safi", "Khénifra", "El Jadid", "Laâyoune", "Mohammedia", "Kouribga", "Béni Mellal",
+    "Ait Melloul", "Nador", "Taza", "Settat", "Barrechid", "Al Khmissat", "Inezgane", "Ksar El Kebir", "My Drarga",
+    "Larache", "Guelmim", "Berkane", "Ad Dakhla", "Bouskoura", "Al Fqih Ben Çalah", "Oued Zem", "Sidi Slimane",
+    "Errachidia", "Guercif", "Oulad Teïma", "Ben Guerir", "Sefrou", "Fnidq", "Sidi Qacem", "Tiznit", "Moulay Abdallah",
+    "Youssoufia", "Martil", "Aïn Harrouda", "Souq Sebt Oulad Nemma", "Skhirate", "Ouezzane", "Sidi Yahya Zaer",
+    "Al Hoceïma", "M’diq", "Midalt", "Azrou", "El Kelaa des Srarhna", "Ain El Aouda", "Beni Yakhlef", "Ad Darwa",
+    "Al Aaroui", "Qasbat Tadla", "Boujad", "Jerada", "Mrirt", "El Aïoun", "Azemmour", "Temsia", "Zagora", "Ait Ourir",
+    "Aziylal", "Sidi Yahia El Gharb", "Biougra", "Zaïo", "Aguelmous", "El Hajeb", "Zeghanghane", "Imzouren", "Tit Mellil",
+    "Mechraa Bel Ksiri", "Al ’Attawia", "Demnat", "Arfoud", "Tameslouht", "Bou Arfa", "Sidi Smai’il", "Souk et Tnine Jorf el Mellah",
+    "Mehdya", "Aïn Taoujdat", "Chichaoua", "Tahla", "Oulad Yaïch", "Moulay Bousselham", "Iheddadene", "Missour", 
+    "Zawyat ech Cheïkh", "Bouknadel", "Oulad Tayeb", "Oulad Barhil", "Bir Jdid", "Tifariti"
+  ];
   return (
     <>
       <nav className="bg-[#3e5091] border-gray-200">
@@ -214,74 +232,126 @@ const NavbarClient = () => {
       </nav>
 
       {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg overflow-hidden shadow-xl max-w-md w-full">
-            <div className="p-4">
-              <span className="close text-black float-right cursor-pointer" onClick={closeModal} aria-label="Close Modal">
-                &times;
-              </span>
-              <h2 className="text-xl font-semibold mb-4">Créer colis</h2>
-              <form onSubmit={handleSubmit}>
-                <input
-                  type="text"
-                  id="livrer_a"
-                  className="w-full p-2 border rounded mb-4"
-                  placeholder="Nom et prénom"
-                  value={formData.livrer_a}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="text"
-                  id="phone"
-                  className="w-full p-2 border rounded mb-4"
-                  placeholder="Téléphone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="text"
-                  id="adress"
-                  className="w-full p-2 border rounded mb-4"
-                  placeholder="Adresse"
-                  value={formData.adress}
-                  onChange={handleChange}
-                  required
-                />
-                <input
-                  type="text"
-                  id="address2"
-                  className="w-full p-2 border rounded mb-4"
-                  placeholder="Adresse 2"
-                  value={formData.address2}
-                  onChange={handleChange}
-                />
-                <label htmlFor="ville" className="block mb-2">Ville</label>
-                <select
-                  id="ville"
-                  className="w-full p-2 border rounded mb-4"
-                  value={formData.ville}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="" disabled>Choisir une ville</option>
-                  <option value="casablanca">Casablanca</option>
-                  <option value="fes">Fès</option>
-                  <option value="marrakech">Marrakech</option>
-                  <option value="tangier">Tangier</option>
-                  {/* Add other options here */}
-                </select>
-                <button
-                  type="submit"
-                  className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                >
-                  Soumettre
-                </button>
-              </form>
+      <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+      <div className="bg-white rounded-lg overflow-hidden shadow-xl max-w-md w-full">
+        <div className="p-4">
+          <span
+            className="close text-black float-right cursor-pointer"
+            onClick={closeModal}
+            aria-label="Close Modal"
+          >
+            &times;
+          </span>
+          <h2 className="text-xl font-semibold mb-4">Créer colis</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              id="livrer_a"
+              className="w-full p-2 border rounded mb-4"
+              placeholder="Nom et prénom"
+              value={formData.livrer_a}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              id="phone"
+              className="w-full p-2 border rounded mb-4"
+              placeholder="Téléphone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              id="adress"
+              className="w-full p-2 border rounded mb-4"
+              placeholder="Adresse"
+              value={formData.adress}
+              onChange={handleChange}
+              required
+            />
+            <input
+              type="text"
+              id="address2"
+              className="w-full p-2 border rounded mb-4"
+              placeholder="Adresse 2"
+              value={formData.address2}
+              onChange={handleChange}
+            />
+    
+            <div className="mb-4">
+              <label htmlFor="city-de" className="block text-sm font-medium text-gray-700">
+                De
+              </label>
+              <select
+  id="de"
+  name="de"
+  onChange={handleChange}
+  value={formData.de}
+  className="w-full p-2 border rounded mb-4 bg-white"
+>
+  <option value="" disabled>
+    Select ville
+  </option>
+  {cities.map((city, index) => (
+    <option key={index} value={city}>
+      {city}
+    </option>
+  ))}
+</select>
             </div>
-          </div>
+    
+            <div className="mb-4">
+              <label htmlFor="city-a" className="block text-sm font-medium text-gray-700">
+                À
+              </label>
+              <select
+  id="ville"
+  name="ville"
+  onChange={handleChange}
+  value={formData.ville}
+  className="w-full p-2 border rounded mb-4 bg-white"
+>
+  <option value="" disabled>
+    Select ville
+  </option>
+  {cities.map((city, index) => (
+    <option key={index} value={city}>
+      {city}
+    </option>
+  ))}
+</select>
+            </div>
+                
+            <input
+              type="number"
+              id="CRBT"
+              className="w-full p-2 border rounded mb-4"
+              placeholder="CRBT"
+              value={formData.CRBT}
+              onChange={handleChange}
+            />
+            
+                   <input
+              type="number"
+              id="valeur"
+              className="w-full p-2 border rounded mb-4"
+              placeholder="valeur"
+              value={formData.valeur}
+              onChange={handleChange}
+            />
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 w-full"
+            >
+              Soumettre
+            </button>
+          </form>
         </div>
+      </div>
+    </div>
+    
       )}
     </>
   );

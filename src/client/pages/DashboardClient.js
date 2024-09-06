@@ -78,7 +78,7 @@ function DashboardClient() {
         setLoading(false);
       });
   }, []);  
-
+  console.log('DATA MY COLIS ',data);
   // Calculate the totals
   const totals = useMemo(() => {
     return data.reduce(

@@ -13,12 +13,16 @@ import Register2 from "./auth/Register2";
 import PrivateRoute from "./PrivateRoute";
 import Unauthorized from "./Unauthorized"; 
 import ContactUs from "./ContactUs";
+import RegisterClient from "./auth/RegisterClient";
+
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login />} />
+        <Route path="/registerC" element={<RegisterClient />} />
+
         <Route path="/contactUs" element={<ContactUs />} />
         {/* <Route path="/commandes" element={<CommandesPage />} /> */}
 
